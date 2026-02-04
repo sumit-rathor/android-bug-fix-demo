@@ -49,10 +49,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Scaffold (
-                modifier = Modifier.fillMaxSize(),
-//                backgro = Color(0xFFF6F6F6)
-            ) { innerPadding ->
+            Scaffold (modifier = Modifier.fillMaxSize()) { innerPadding ->
                 ProfileFlow(
                     modifier = Modifier.padding(innerPadding)
                 )
@@ -172,7 +169,6 @@ fun ProfileScreen(onEditClick: () -> Unit) {
 @Composable
 fun StatCard(title: String, value: String) {
     Card(
-//        modifier = Modifier.weight(1f),
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
@@ -210,11 +206,9 @@ fun EditProfileScreenPreview() {
 @Composable
 fun EditProfileScreen(onSave: () -> Unit) {
 
-    var selectedAvatar by remember { mutableStateOf(0) }
     var mobileNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
 
-    val avatars = List(9) { it }
 
     Column(
         modifier = Modifier
@@ -233,7 +227,7 @@ fun EditProfileScreen(onSave: () -> Unit) {
             Text("Edit Profile", fontSize = 22.sp, fontWeight = FontWeight.Bold)
             Spacer(Modifier.weight(1f))
             TextButton(onClick = {
-                val number = mobileNumber.toLong()
+                val number = mobileNumber.toLongOrNull()
                 onSave()
             }) {
                 Text("Save")
@@ -241,37 +235,6 @@ fun EditProfileScreen(onSave: () -> Unit) {
         }
 
         Spacer(Modifier.height(20.dp))
-
-/*
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.height(220.dp)
-        ) {
-            items(avatars) { index ->
-                Box(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .background(
-                            if (index == selectedAvatar) Color(0xFF81C784) else Color(
-                                0xFFB39DDB
-                            ),
-                            CircleShape
-                        )
-                        .border(
-                            2.dp,
-                            if (index == selectedAvatar) Color.Black else Color.Transparent,
-                            CircleShape
-                        )
-                        .clickable { selectedAvatar = index },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("S", fontSize = 24.sp, color = Color.White)
-                }
-            }
-        }
-*/
 
         Spacer(Modifier.height(24.dp))
 
